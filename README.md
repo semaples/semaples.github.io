@@ -2,3 +2,8 @@
 Skye Maples semaples@my.waketech.edu
 This is my school account 
 This repository will hold all my assignments 
+# About me
+## My interests
+I love the outdoors; i love hiking and going for runs.
+## websites i recommend
+_[reddit](https://www.reddit.com)-  I litrally use reddit whenever i have question about something, it a great place for people to share common knowlege
