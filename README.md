@@ -6,4 +6,4 @@ This repository will hold all my assignments
 ## My interests
 I love the outdoors; i love hiking and going for runs.
 ## websites i recommend
-_ [reddit](https://www.reddit.com) -  I litrally use reddit whenever i have question about something, it's a great place for people to share common knowlege and interest.
+- [reddit](https://www.reddit.com) - I litrally use reddit whenever i have question about something, it's a great place for people to share common knowlege and interest.
