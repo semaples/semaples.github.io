@@ -4,7 +4,7 @@ A[Start Game] --> B[Generate Random Number]
 B --> C[Prompt Playes To Guess]
 C --> D{Is Guess Correct?}
 D --> |Yes| E[Congratuale Playes]
-D --> |No| F {Is Guess Too High?}
+D --> |No| F{Is Guess Too High?}
 F --> |Yes| G[Show 'Too High']
 F --> |No| H[Show 'Too Low']
 G --> C
