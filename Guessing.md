@@ -1,4 +1,4 @@
-```Mermaid
+```mermaid
 flowchart TD
 A[Start Game] --> B[Generate Random Number]
 B --> C[Prompt Playes To Guess]
