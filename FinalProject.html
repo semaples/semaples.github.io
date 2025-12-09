@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Skye Maples 
+     WEB 115 
+     DEC 1 2025 -->
+     
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        select {
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            padding: 5px 10px;
+            margin-left: 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #da190b;
+        }
+
+        #taskmanager {
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .task-item {
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+
+    <div class="form-container">
+        <h2>Add New Task</h2>
+        <form id="taskForm">
+            <label>Task Name:</label><br>
+            <input type="text" id="taskName" placeholder="Enter task name"><br>
+
+            <label>Priority:</label><br>
+            <select id="taskPriority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select><br>
+
+            <label>
+                <input type="checkbox" id="taskImportant">
+                Mark as Important
+            </label><br>
+
+            <label>
+                <input type="checkbox" id="taskCompleted">
+                Mark as Completed
+            </label><br>
+
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <h2>My Tasks</h2>
+    <div id="taskmanager">
+        <p>No tasks yet.</p>
+    </div>
+
+    <script>
+        // Task array
+        let tasks = [];
+        let taskId = 1;
+
+        // Get form elements
+        const form = document.getElementById('taskForm');
+        const taskNameInput = document.getElementById('taskName');
+        const prioritySelect = document.getElementById('taskPriority');
+        const importantCheckbox = document.getElementById('taskImportant');
+        const completedCheckbox = document.getElementById('taskCompleted');
+        const taskManagerDiv = document.getElementById('taskmanager');
+
+        // Add task when form is submitted
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const taskName = taskNameInput.value.trim();
+
+            if (taskName === '') {
+                alert('Please enter a task name');
+                return;
+            }
+
+            // Create new task object
+            const newTask = {
+                id: taskId,
+                name: taskName,
+                priority: prioritySelect.value,
+                isImportant: importantCheckbox.checked,
+                isCompleted: completedCheckbox.checked,
+                date: new Date().toLocaleDateString()
+            };
+
+            taskId++;
+            tasks.push(newTask);
+
+            // Log to console
+            console.log(JSON.stringify(tasks));
+
+            // Update display
+            displayTasks();
+
+            // Clear form
+            form.reset();
+        });
+
+        // Display tasks function
+        function displayTasks() {
+            if (tasks.length === 0) {
+                taskManagerDiv.innerHTML = '<p>No tasks yet.</p>';
+                return;
+            }
+
+            let html = '';
+
+            for (let i = 0; i < tasks.length; i++) {
+                const task = tasks[i];
+
+                html += '<div class="task-item" id="task-' + task.id + '">';
+                html += '<strong id="taskname-' + task.id + '">' + task.name + '</strong><br>';
+                html += 'Priority: ' + task.priority + '<br>';
+                html += 'Added: ' + task.date + '<br>';
+                html += '<button onclick="toggleComplete(' + task.id + ')">Toggle Complete</button>';
+                html += '<button class="delete-btn" onclick="deleteTask(' + task.id + ')">Delete</button>';
+                html += '</div>';
+            }
+
+            taskManagerDiv.innerHTML = html;
+
+            // Apply styles using .style property
+            for (let i = 0; i < tasks.length; i++) {
+                const task = tasks[i];
+                const taskElement = document.getElementById('task-' + task.id);
+                const taskNameElement = document.getElementById('taskname-' + task.id);
+
+                // Important tasks - red background
+                if (task.isImportant) {
+                    taskElement.style.backgroundColor = '#ffcccc';
+                }
+
+                // Completed tasks - strikethrough
+                if (task.isCompleted) {
+                    taskNameElement.style.textDecoration = 'line-through';
+                }
+            }
+        }
+
+        // Delete task function
+        function deleteTask(id) {
+            tasks = tasks.filter(function(task) {
+                return task.id !== id;
+            });
+
+            console.log(JSON.stringify(tasks));
+            displayTasks();
+        }
+
+        // Toggle complete function
+        function toggleComplete(id) {
+            for (let i = 0; i < tasks.length; i++) {
+                if (tasks[i].id === id) {
+                    tasks[i].isCompleted = !tasks[i].isCompleted;
+                    break;
+                }
+            }
+
+            console.log(JSON.stringify(tasks));
+            displayTasks();
+        }
+    </script>
+</body>
+</html>
